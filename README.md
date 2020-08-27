@@ -5,7 +5,7 @@ Internally, it uses QuickSelect as well as C++ std::nth_element(), so the averag
 
 The source code consists of only one file, so you can easily use it by copy and past.
 
-[source code](https://github.com/nenoNaninu/NthItemLib/blob/master/NthItemLib/NthSearch.cs)
+[source code](https://github.com/nenoNaninu/NthItemLib/blob/master/NthItemLib/NthItemLib.cs)
 
 
 # API
