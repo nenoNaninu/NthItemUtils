@@ -25,17 +25,9 @@ namespace Test
 
                 var order = randomSource.OrderBy(x => x).ToArray();
 
-                var range = Enumerable.Range(0, randomSource.Length).ToArray();
+                int n = random.Next(200);
 
-                var list = new List<double>();
-                foreach (var t in randomSource)
-                {
-                    list.Add(t);
-                }
-
-                int k = random.Next(200);
-
-                Assert.IsTrue(order[k] == list.ToArray().AsSpan().NthSmallest(k).Item);
+                Assert.IsTrue(order[n] == randomSource.AsSpan().NthSmallest(n).Item); // always true.
             }
         }
 
@@ -161,7 +153,8 @@ namespace Test
                 Assert.IsTrue(result <= 0);
             }
 
-            for (int i = n; i < randomSource.Length; i++)
+
+            for (int i = n + 1; i < randomSource.Length; i++)
             {
                 var result = Comparer<double>.Default.Compare(randomSource[indices[i]], pivot);
 
