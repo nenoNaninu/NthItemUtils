@@ -1,11 +1,11 @@
-# NthItemLib
+# NthItemExtensions
 
 A library for getting the nth smallest value, the nth largest value, etc. from a randomly accessible data structure like `Span<T>`,`ReadOnlySpan<T>`, `IReadOnlyList<T>`.
 Internally, it uses QuickSelect as well as C++ std::nth_element(), so the average performance is O(n).
 
 The source code consists of only one file, so you can easily use it by copy and past.
 
-[source code](https://github.com/nenoNaninu/NthItemLib/blob/master/NthItemLib/NthItemLib.cs)
+[source code](https://github.com/nenoNaninu/NthItemLib/blob/master/NthItemLib/NthItemExtensions.cs)
 
 
 # API

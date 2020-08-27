@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{5441CADA-B020-4997-A7DF-B14D4880F961}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NthItemLib", "NthItemLib\NthItemLib.csproj", "{F9946C00-0804-422E-8579-C444053A8870}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NthItemExtensions", "NthItemLib\NthItemExtensions.csproj", "{F9946C00-0804-422E-8579-C444053A8870}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
