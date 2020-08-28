@@ -85,7 +85,7 @@ for (int i = n + 1; i < source.Length; i++)
 
 ArrayPool<int>.Shared.Return(pool);
 ```
-Get Range Item
+Get items in some range
 ```cs
 ReadOnlySpan<int> randomSource = Enumerable.Range(0, 100).Shuffle().ToArray().AsSpan();
 var pool = ArrayPool<int>.Shared.Rent(randomSource.Length);
@@ -94,8 +94,6 @@ var indices = pool.AsSpan(0, randomSource.Length);
 QuickSelect.Iota(indices);
 
 //Get 50 <= item < 60
-int n = 50;
-
 QuickSelect.Execute(randomSource, indices, 50);
 QuickSelect.Execute(randomSource, indices[50..], 10);
 
