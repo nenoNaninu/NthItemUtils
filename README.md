@@ -40,6 +40,9 @@ public static class QuickSelect
     
     public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n);
     public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, Comparer<T> comparer);
+
+    public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, int begin, int count);
+    public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, int begin, int count, Comparer<T> comparer)
 }
 
 ```
