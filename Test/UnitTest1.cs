@@ -7,6 +7,14 @@ using NUnit.Framework;
 
 namespace Test
 {
+    public static class Ex
+    {
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+        {
+            return source.OrderBy(x => Guid.NewGuid());
+        }
+    }
+
     public class Tests
     {
         [SetUp]
@@ -75,7 +83,8 @@ namespace Test
 
             for (int k = 0; k < 100; k++)
             {
-                ReadOnlySpan<double> randomSource = Enumerable.Range(0, 200).Select(_ => random.NextDouble() * 50).ToArray().AsSpan();
+                ReadOnlySpan<double> randomSource =
+                    Enumerable.Range(0, 200).Select(_ => random.NextDouble() * 50).ToArray().AsSpan();
                 var pool = ArrayPool<int>.Shared.Rent(randomSource.Length);
                 var indices = pool.AsSpan(0, randomSource.Length);
 
@@ -123,7 +132,8 @@ namespace Test
 
             for (int k = 0; k < 100; k++)
             {
-                ReadOnlySpan<double> randomSource = Enumerable.Range(0, 200).Select(_ => random.NextDouble() * 50).ToArray().AsSpan();
+                ReadOnlySpan<double> randomSource =
+                    Enumerable.Range(0, 200).Select(_ => random.NextDouble() * 50).ToArray().AsSpan();
                 var pool = ArrayPool<int>.Shared.Rent(randomSource.Length);
                 var indices = pool.AsSpan(0, randomSource.Length);
 
@@ -167,7 +177,8 @@ namespace Test
 
             for (int k = 0; k < 100; k++)
             {
-                ReadOnlySpan<double> randomSource = Enumerable.Range(0, 200).Select(_ => random.NextDouble() * 50).ToArray().AsSpan();
+                ReadOnlySpan<double> randomSource =
+                    Enumerable.Range(0, 200).Select(_ => random.NextDouble() * 50).ToArray().AsSpan();
                 var pool = ArrayPool<int>.Shared.Rent(randomSource.Length);
                 var indices = pool.AsSpan(0, randomSource.Length);
 
@@ -243,7 +254,12 @@ namespace Test
                 ArrayPool<int>.Shared.Return(pool);
             }
         }
-        private static void DebugView<T>(ReadOnlySpan<T> vectors, Span<int> indices, int partition) where T : IComparable<T>
+
+
+
+
+        private static void DebugView<T>(ReadOnlySpan<T> vectors, Span<int> indices, int partition)
+            where T : IComparable<T>
         {
             Console.WriteLine("==========Debug View=========");
             for (int i = 0; i < partition; i++)
@@ -268,7 +284,7 @@ namespace Test
 
 
             //var randomSource = new int[] { 1, 2, 3, 4, 4, 4, 4, 4, 5, 6, 7, 8 };
-            Span<int> randomSource = new int[] { 4, 4, 8, 1, 2, 5, 4, 4, 4, 6, 7, 3 }.AsSpan();
+            Span<int> randomSource = new int[] {4, 4, 8, 1, 2, 5, 4, 4, 4, 6, 7, 3}.AsSpan();
 
             var pool = ArrayPool<int>.Shared.Rent(randomSource.Length);
 
@@ -329,6 +345,30 @@ namespace Test
 
                 Assert.IsTrue(randomSource.Min() == randomSource.MinWithIndex().Item);
             }
+        }
+
+        [Test]
+        public void Test7()
+        {
+            ReadOnlySpan<int> randomSource = Enumerable.Range(0, 200).Shuffle().ToArray().AsSpan();
+            var pool = ArrayPool<int>.Shared.Rent(randomSource.Length);
+            var indices = pool.AsSpan(0, randomSource.Length);
+
+            QuickSelect.Iota(indices);
+
+            //Get 50 <= item < 60
+            int n = 50;
+
+            QuickSelect.Execute(randomSource, indices, 50);
+            QuickSelect.Execute(randomSource, indices[50..], 10);
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.Write($"{randomSource[indices[50 + i]]}, ");
+            }
+            // output : 50, 56, 51, 57, 55, 54, 53, 52, 58, 59, 
+
+            ArrayPool<int>.Shared.Return(pool);
         }
     }
 }
