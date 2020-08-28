@@ -6,7 +6,7 @@ Internally, it uses QuickSelect as well as C++ `std::nth_element()`, so the aver
 The source code consists of **only one file**, so you can easily use it by copy and past.
 
 
-[source code](https://github.com/nenoNaninu/NthItemLib/blob/master/NthItemLib/NthItemUtils.cs)
+[source code](https://github.com/nenoNaninu/NthItemUtils/blob/master/NthItemUtils/NthItemUtils.cs)
 
 
 # API
