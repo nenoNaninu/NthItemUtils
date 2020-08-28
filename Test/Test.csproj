@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NthItemExtensions\NthItemExtensions.csproj" />
+    <ProjectReference Include="..\NthItemUtils\NthItemUtils.csproj" />
   </ItemGroup>
 
 </Project>

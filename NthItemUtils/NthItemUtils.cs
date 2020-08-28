@@ -3,7 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace NthItemExtensions
+namespace NthItemUtils
 {
     public readonly struct ItemWithIndex<T>
     {
@@ -17,7 +17,7 @@ namespace NthItemExtensions
         }
     }
 
-    public static class NthExtensions
+    public static class NthItemExtensions
     {
         /// <param name="n">0 ~ source.Count - 1</param>
         public static ItemWithIndex<T> NthLargest<T>(this IReadOnlyList<T> source, int n) where T : IComparable<T>
@@ -485,59 +485,73 @@ namespace NthItemExtensions
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void Validation<T>(IReadOnlyList<T> source, Span<int> indices, int n)
+        private static void Validation<T>(IReadOnlyList<T> source, int n)
         {
             if (source.Count <= n)
             {
                 throw new ArgumentException("n is bigger than source.Count");
             }
-
-            if (indices.Length < source.Count)
-            {
-                throw new ArgumentException("source.Count is bigger than indices.Length");
-            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void Validation<T>(ReadOnlySpan<T> source, Span<int> indices, int n)
+        private static void Validation<T>(ReadOnlySpan<T> source, int n)
         {
             if (source.Length <= n)
             {
                 throw new ArgumentException("n is bigger than source.Length");
-            }
-
-            if (indices.Length < source.Length)
-            {
-                throw new ArgumentException("source.Length is bigger than indices.Length");
             }
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
         public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n) where T : IComparable<T>
         {
-            Validation(source, indices, n);
+            Validation(source, n);
             ExecuteCore(source, indices, n, 0, source.Count, Comparer<T>.Default);
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
         public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, Comparer<T> comparer)
         {
-            Validation(source, indices, n);
+            Validation(source, n);
             ExecuteCore(source, indices, n, 0, source.Count, comparer);
+        }
+
+        public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, int begin, int count)
+        {
+            Validation(source, n);
+            ExecuteCore(source, indices, n, begin, count, Comparer<T>.Default);
+        }
+
+        public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, int begin, int count, Comparer<T> comparer)
+        {
+            Validation(source, n);
+            ExecuteCore(source, indices, n, begin, count, comparer);
         }
 
         /// <param name="n">0 ~ source.Length - 1</param>
         public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n) where T : IComparable<T>
         {
-            Validation(source, indices, n);
+            Validation(source, n);
             ExecuteCore(source, indices, n, 0, source.Length, Comparer<T>.Default);
         }
 
         /// <param name="n">0 ~ source.Length - 1</param>
         public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, Comparer<T> comparer)
         {
-            Validation(source, indices, n);
+            Validation(source, n);
             ExecuteCore(source, indices, n, 0, source.Length, comparer);
+        }
+
+        public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, int begin, int count)
+        {
+            Validation(source, n);
+            ExecuteCore(source, indices, n, begin, count, Comparer<T>.Default);
+        }
+
+        public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, int begin, int count, Comparer<T> comparer)
+        {
+            Validation(source, n);
+            ExecuteCore(source, indices, n, begin, count, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -2,7 +2,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
-using NthItemExtensions;
+using NthItemUtils;
 using NUnit.Framework;
 
 namespace Test
