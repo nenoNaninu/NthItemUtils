@@ -101,7 +101,7 @@ namespace NthItemUtils
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
-        public static ItemWithIndex<T> NthSmallest<T>(this IReadOnlyList<T> source, int n, Comparer<T> comparer) 
+        public static ItemWithIndex<T> NthSmallest<T>(this IReadOnlyList<T> source, int n, Comparer<T> comparer)
         {
             var pool = ArrayPool<int>.Shared.Rent(source.Count);
 
@@ -120,7 +120,7 @@ namespace NthItemUtils
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
-        public static ItemWithIndex<T> NthLargest<T>(this Span<T> source, int n, Comparer<T> comparer) 
+        public static ItemWithIndex<T> NthLargest<T>(this Span<T> source, int n, Comparer<T> comparer)
         {
             return source.NthSmallest(source.Length - 1 - n, comparer);
         }
@@ -145,7 +145,7 @@ namespace NthItemUtils
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
-        public static ItemWithIndex<T> NthLargest<T>(this ReadOnlySpan<T> source, int n, Comparer<T> comparer) 
+        public static ItemWithIndex<T> NthLargest<T>(this ReadOnlySpan<T> source, int n, Comparer<T> comparer)
         {
             return source.NthSmallest(source.Length - 1 - n, comparer);
         }
@@ -485,73 +485,59 @@ namespace NthItemUtils
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void Validation<T>(IReadOnlyList<T> source, int n)
+        private static void Validation<T>(IReadOnlyList<T> source, Span<int> indices, int n)
         {
             if (source.Count <= n)
             {
                 throw new ArgumentException("n is bigger than source.Count");
             }
+
+            if (indices.Length <= n)
+            {
+                throw new ArgumentException("n is bigger than indices.Length");
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void Validation<T>(ReadOnlySpan<T> source, int n)
+        private static void Validation<T>(ReadOnlySpan<T> source, Span<int> indices, int n)
         {
             if (source.Length <= n)
             {
                 throw new ArgumentException("n is bigger than source.Length");
+            }
+
+            if (indices.Length <= n)
+            {
+                throw new ArgumentException("n is bigger than indices.Length");
             }
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
         public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n) where T : IComparable<T>
         {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, 0, source.Count, Comparer<T>.Default);
+            Validation(source, indices, n);
+            ExecuteCore(source, indices, n, 0, indices.Length, Comparer<T>.Default);
         }
 
         /// <param name="n">0 ~ source.Count - 1</param>
         public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, Comparer<T> comparer)
         {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, 0, source.Count, comparer);
-        }
-
-        public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, int begin, int count)
-        {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, begin, count, Comparer<T>.Default);
-        }
-
-        public static void Execute<T>(IReadOnlyList<T> source, Span<int> indices, int n, int begin, int count, Comparer<T> comparer)
-        {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, begin, count, comparer);
+            Validation(source, indices, n);
+            ExecuteCore(source, indices, n, 0, indices.Length, comparer);
         }
 
         /// <param name="n">0 ~ source.Length - 1</param>
         public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n) where T : IComparable<T>
         {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, 0, source.Length, Comparer<T>.Default);
+            Validation(source, indices, n);
+            ExecuteCore(source, indices, n, 0, indices.Length, Comparer<T>.Default);
         }
 
         /// <param name="n">0 ~ source.Length - 1</param>
         public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, Comparer<T> comparer)
         {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, 0, source.Length, comparer);
-        }
-
-        public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, int begin, int count)
-        {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, begin, count, Comparer<T>.Default);
-        }
-
-        public static void Execute<T>(ReadOnlySpan<T> source, Span<int> indices, int n, int begin, int count, Comparer<T> comparer)
-        {
-            Validation(source, n);
-            ExecuteCore(source, indices, n, begin, count, comparer);
+            Validation(source, indices, n);
+            ExecuteCore(source, indices, n, 0, indices.Length, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
