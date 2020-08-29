@@ -5,20 +5,23 @@ Internally, it uses QuickSelect as well as C++ `std::nth_element()`, so the aver
 
 The source code consists of **only one file**, so you can easily use it by copy and past.
 
-
 [source code](https://github.com/nenoNaninu/NthItemUtils/blob/master/NthItemUtils/NthItemUtils.cs)
 
+or [nuget](https://www.nuget.org/packages/NthItemUtils/).
+```
+dotnet add package NthItemUtils
+```
 
 # API
 API is defined as an extension method of `Span<T>`, `ReadOnlySpan<T>`, and `IReadOnlyList<T>`.
 The range of n is between 0 and source.Length - 1.
 All return value types are `struct ItemWithIndex<T>{ T Item; int index }`.
 ```cs
-NthLargest<T>(this Span<T> source, int n)
-NthLargest<T>(this Span<T> source, int n, Comparer<T> comparer)
-
 NthSmallest<T>(this Span<T> source, int n)
 NthSmallest<T>(this Span<T> source, int n, Comparer<T> comparer)
+
+NthLargest<T>(this Span<T> source, int n)
+NthLargest<T>(this Span<T> source, int n, Comparer<T> comparer)
 
 MaxWithIndex<T>(this Span<T> source)
 MaxWithIndex<T>(this Span<T> source, Comparer<T> comparer)

@@ -2,7 +2,24 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+
+    <Version>1.0.0</Version>
+    <PackageId>NthItemUtils</PackageId>
+    <Title>NthItemUtils</Title>
+    <PackageVersion>$(Version)</PackageVersion>
+    <Authors>nenoNaninu</Authors>
+    <PackageProjectUrl>https://github.com/nenoNaninu/NthItemUtils</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags></PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Copyright>(c) nenoNaninu</Copyright>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Memory" Version="4.5.4" />
